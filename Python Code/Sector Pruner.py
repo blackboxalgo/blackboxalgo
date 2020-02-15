@@ -3,7 +3,12 @@ from pandas import ExcelWriter
 from pandas import ExcelFile
 import numpy as np
 
-datamatrix = pd.read_csv(r'G:\Python Data\FactSet Alpha Testing Export\dr_extract_dram.txt')
+datamatrix = pd.read_csv(r'G:\Python Data\FactSet Alpha Testing Export\datarobotextract.txt')
+datamatrix.columns
+#datamatrix
+
+datamatrix = datamatrix[datamatrix['MktVal Co'] > 1000]
+datamatrix
 
 #Energy
 energy_2100 = datamatrix[datamatrix['Sector'] == 2100]

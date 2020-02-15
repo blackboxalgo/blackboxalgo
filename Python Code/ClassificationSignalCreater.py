@@ -3,11 +3,12 @@ from pandas import ExcelWriter
 from pandas import ExcelFile
 import numpy as np
 
-datamatrix = pd.read_csv(r'G:\Python Data\FactSet Alpha Testing Export\datarobotextract.txt')
+file_name = 'Data Export - 10.csv'
+
+datamatrix = pd.read_csv(fr'G:\Python Data\FactSet Alpha Testing Export\{file_name}')
 
 datamatrix['MktVal Co']
 datamatrix = datamatrix[datamatrix['MktVal Co'] > 10000]
-datamatrix
 
 number_of_companies = datamatrix.groupby(['Period (YYYYMMDD)']).size()
 
@@ -40,7 +41,7 @@ merged_table.loc[merged_table['Universe Returns Additional Return 3_x'] > merged
 merged_table.loc[merged_table['Universe Returns Additional Return 4_x'] > merged_table['Universe Returns Additional Return 4_y'], 'Outperform 6-Month'] = 1
 merged_table.loc[merged_table['Universe Returns Additional Return 5_x'] > merged_table['Universe Returns Additional Return 5_y'], 'Outperform 12-Month'] = 1
 final_table = merged_table.fillna('NA')
-number_of_companies.to_csv(r'G:\Python Data\FactSet Alpha Testing Export\Number of Companies - All 10B.csv',index=True)
-all_features.to_csv(r'G:\Python Data\FactSet Alpha Testing Export\All Features.csv',index=True)
-final_table.to_csv(r'G:\Python Data\FactSet Alpha Testing Export\Data Export All 10B.csv',index=False)
+number_of_companies.to_csv(fr'G:\Python Data\FactSet Alpha Testing Export\Number of Companies - {file_name}.csv',index=True)
+#all_features.to_csv(fr'G:\Python Data\FactSet Alpha Testing Export\Features - {file_name}.csv',index=True)
+final_table.to_csv(fr'G:\Python Data\FactSet Alpha Testing Export\DR - {file_name}',index=False)
 
