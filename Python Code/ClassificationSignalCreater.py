@@ -3,18 +3,25 @@ from pandas import ExcelWriter
 from pandas import ExcelFile
 import numpy as np
 
-file_name = 'Data Export - 10.csv'
+file_name = 'dr_extract_dram.txt'
 
 datamatrix = pd.read_csv(fr'G:\Python Data\FactSet Alpha Testing Export\{file_name}')
 
 datamatrix['MktVal Co']
-datamatrix = datamatrix[datamatrix['MktVal Co'] > 10000]
+datamatrix = datamatrix[datamatrix['MktVal Co'] > 1000]
+
+datamatrix['Payout EPS']
+datamatrix = datamatrix[datamatrix['Payout EPS'] < 90]
+
+datamatrix['Div Yld']
+datamatrix = datamatrix[datamatrix['Div Yld'] > 0.029]
 
 number_of_companies = datamatrix.groupby(['Period (YYYYMMDD)']).size()
-
 unique_dates = datamatrix['Period (YYYYMMDD)']
 all_features = datamatrix.columns
 
+all_features
+number_of_companies
 
 #quantile returns
 quintile_period_returns_2 = datamatrix.groupby('Period (YYYYMMDD)')['Universe Returns Additional Return 2'].quantile(1/2)
@@ -45,3 +52,12 @@ number_of_companies.to_csv(fr'G:\Python Data\FactSet Alpha Testing Export\Number
 #all_features.to_csv(fr'G:\Python Data\FactSet Alpha Testing Export\Features - {file_name}.csv',index=True)
 final_table.to_csv(fr'G:\Python Data\FactSet Alpha Testing Export\DR - {file_name}',index=False)
 
+unique_dates2 = datamatrix['Period (YYYYMMDD)'].unique()
+
+dates1 = pd.DataFrame(unique_dates2)
+
+dates1.to_csv(fr'G:\Python Data\FactSet Alpha Testing Export\DR dates.txt',index=False)
+lastmonth = final_table[final_table['Period (YYYYMMDD)'] == 20191227]
+lastmonth.to_csv(fr'G:\Python Data\FactSet Alpha Testing Export\DR test.txt',index=False)
+
+final_table['Outperform 12-Month'].sum()
