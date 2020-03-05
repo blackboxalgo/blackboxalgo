@@ -8,10 +8,15 @@ file_name = 'dr_extract_dram.txt'
 datamatrix = pd.read_csv(fr'G:\Python Data\FactSet Alpha Testing Export\{file_name}')
 
 datamatrix['MktVal Co']
-datamatrix = datamatrix[datamatrix['MktVal Co'] > 10000]
+datamatrix = datamatrix[datamatrix['MktVal Co'] > 1000]
+
+datamatrix['Payout EPS']
+datamatrix = datamatrix[datamatrix['Payout EPS'] < 90]
+
+datamatrix['Div Yld']
+datamatrix = datamatrix[datamatrix['Div Yld'] > 0.029]
 
 number_of_companies = datamatrix.groupby(['Period (YYYYMMDD)']).size()
-
 unique_dates = datamatrix['Period (YYYYMMDD)']
 all_features = datamatrix.columns
 
